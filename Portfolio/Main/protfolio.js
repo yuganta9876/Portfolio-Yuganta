@@ -8,6 +8,9 @@ const portfoiioLists = document.querySelectorAll(".portfolio-list");
 const portfolioBoxs = document.querySelectorAll(".portfolio-box");
 
 
+
+
+  
 // navbar section when click on tablist
 navs.forEach((nav, idx) => {
     nav.addEventListener("click", () => {
@@ -56,3 +59,44 @@ portfoiioLists.forEach((list, idx) => {
 setTimeout(()=>{
   sections[4].classList.remove('active');
 },1000);
+
+const viewMoreBtn = document.getElementById("viewMoreBtn");
+
+viewMoreBtn.addEventListener("click", () => {
+    const idx = 3; // for example, '2' means Skills section if it's third in order
+    document.querySelector('.nav-list li.active').classList.remove("active");
+    navs[idx].classList.add('active');
+
+    cube.style.transform = `rotateY(${idx * -90}deg)`;
+
+    document.querySelector('.section.active').classList.remove("active");
+    sections[idx].classList.add("active");
+
+    // handle action-contact logic if needed
+    if(sections[idx].classList.contains('active')){
+        sections[4].classList.add('action-contact');
+    }
+});
+
+
+// 
+(function(){
+    emailjs.init("TN3Dwo5nchjlt582O"); // Your Public Key
+  })();
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementsByClassName('contact-form')[0];
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm('service_bamc5v8', 'template_pqs1t84', this)
+        .then(() => {
+          alert('Message sent successfully!');
+          this.reset();
+        }, (error) => {
+          console.error('FAILED...', error);
+          alert('Failed to send. Try again later.');
+        });
+    });
+  });
+
